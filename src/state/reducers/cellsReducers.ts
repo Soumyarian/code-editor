@@ -54,7 +54,7 @@ const cellSlice = createSlice({
       }
     },
 
-    insertCellBefore: (
+    insertCellAfter: (
       state: CellsState,
       action: PayloadAction<InsertCellPayload>
     ) => {
@@ -67,9 +67,9 @@ const cellSlice = createSlice({
       state.data[cell.id] = cell;
       const index = state.order.findIndex(key => key === id);
       if (index < 0) {
-        state.order.push(cell.id);
+        state.order.unshift(cell.id);
       } else {
-        state.order.splice(index, 0, cell.id);
+        state.order.splice(index + 1, 0, cell.id);
       }
     },
   },
@@ -79,7 +79,7 @@ const randomId = () => {
   return Math.random().toString(36).substring(2, 5);
 };
 
-export const { updateCell, deleteCell, moveCell, insertCellBefore } =
+export const { updateCell, deleteCell, moveCell, insertCellAfter } =
   cellSlice.actions;
 
 export const cellReducer = cellSlice.reducer;

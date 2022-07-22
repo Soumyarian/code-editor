@@ -21,3 +21,15 @@ export interface InsertCellPayload {
   id: string | null;
   type: CellTypes;
 }
+
+export interface BundlingStartPayload {
+  cellId: string;
+}
+
+export interface BundlingEndPayload {
+  cellId: string;
+  bundle: {
+    code: string;
+    err: string;
+  };
+}

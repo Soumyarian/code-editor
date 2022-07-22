@@ -17,7 +17,7 @@ const CellListItem: FC<CellListItemProps> = ({ cell }) => {
   }
   return (
     <div className="flex flex-col card pb-2">
-      <ActionBar id={cell.id} />
+      <ActionBar id={cell.id} type={cell.type} />
       {child}
     </div>
   );

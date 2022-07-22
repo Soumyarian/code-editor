@@ -18,4 +18,16 @@ body {
   .icon-button {
     @apply text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-full text-lg  p-1.5 text-center inline-flex items-center;
   }
+
+  .button-purple {
+    @apply text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-3 py-2 text-center shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 space-x-1 flex items-center tracking-wider;
+  }
+
+  .button-pink {
+    @apply text-white bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-pink-300 dark:focus:ring-pink-800 font-medium rounded-lg text-sm px-3 py-2 text-center shadow-lg shadow-pink-500/50 dark:shadow-lg dark:shadow-pink-800/80 space-x-1 flex items-center tracking-wider;
+  }
+
+  .animated {
+    @apply transition-all ease-in-out duration-500 delay-200;
+  }
 }

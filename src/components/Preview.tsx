@@ -41,9 +41,9 @@ const Preview: FC<Props> = ({ code, err }) => {
   }, [code]);
 
   return (
-    <div className="relative preview-wrapper w-full h-full">
+    <div className="relative preview-wrapper w-full h-full bg-white text-black">
       <iframe
-        className="w-full h-full absolute -z-10 top-0 left-0 right-0 bottom-0"
+        className="w-full h-full absolute z-10 top-0 left-0 right-0 bottom-0"
         title="preview"
         ref={iframeRef}
         sandbox="allow-scripts"

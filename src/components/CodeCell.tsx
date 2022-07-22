@@ -1,35 +1,33 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 
 import CodeEditor from "./CodeEditor";
 import Preview from "./Preview";
-import { bundler } from "../bundler";
 import { Resizable } from "./Resizable";
 import { ResizeContextProvider } from "../context/ResizeContext/ResizeContext";
-import { Cell, updateCell } from "../state";
+import { bundleCode, Cell, updateCell } from "../state";
+import { useTypedDispatch } from "../hooks/useTypedDispatch";
 import { useTypedSelector } from "../hooks/useTypedSelector";
-import { useDispatch } from "react-redux";
+import LoadingIndicator from "./LoadingIndicator";
 
 let timer: ReturnType<typeof setTimeout>;
 
 export const CodeCell: FC<{ cell: Cell }> = ({ cell }) => {
-  const dispatch = useDispatch();
-  const [code, setCode] = useState("");
-  const [error, setError] = useState("");
-
-  const executeCode = async () => {
-    const output = await bundler(cell.content);
-    setCode(output.code);
-    setError(output.err);
-  };
+  const dispatch = useTypedDispatch();
+  const bundle = useTypedSelector(state => state.bundle[cell.id]);
 
   useEffect(() => {
+    if (!bundle) {
+      dispatch(bundleCode({ cellid: cell.id, input: cell.content }));
+      return;
+    }
     timer = setTimeout(async () => {
-      await executeCode();
+      dispatch(bundleCode({ cellid: cell.id, input: cell.content }));
     }, 1000);
     return () => {
       clearTimeout(timer);
     };
-  }, [cell.content]);
+    //233 video number es lint disable
+  }, [cell.content, cell.id]);
 
   return (
     <ResizeContextProvider>
@@ -45,7 +43,13 @@ export const CodeCell: FC<{ cell: Cell }> = ({ cell }) => {
             />
           </Resizable>
           <div className="flex-1">
-            <Preview code={code} err={error} />
+            {!bundle || bundle.loading ? (
+              <div className="h-full flex items-center justify-center">
+                <LoadingIndicator />
+              </div>
+            ) : (
+              <Preview code={bundle.code} err={bundle.err} />
+            )}
           </div>
         </div>
       </Resizable>
